@@ -6,10 +6,11 @@ public class Cliente {
     private int cedula;
     private double saldo;
 
-    public Cliente(String nombre, String apellido, int cedula, double saldoIncial) {
+    public Cliente(String nombre, String apellido, int cedula, double saldoInicial) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
+        this.saldo = saldoInicial;
     }
     
     public String getNombre() {
@@ -46,8 +47,6 @@ public class Cliente {
     public void depositar(double monto) {
         if (monto > 0) {
             saldo += monto;
-            //por hacer
-            //registrarMovimiento("Depósito exitoso: +" + monto);
         } else {
             System.out.println("Monto inválido para depósito");
         }
