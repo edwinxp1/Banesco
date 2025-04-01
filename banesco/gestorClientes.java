@@ -54,7 +54,7 @@ public class gestorClientes {
     
     // usado para debugear
     private void crearArchivoClientes() {
-        try (Writer writer = new FileWriter(nombreArchivo);
+/*        try (Writer writer = new FileWriter(nombreArchivo);
              PrintWriter pw = new PrintWriter(writer)) {
 
             pw.println("Juan/Perez/12345/1000.50");
@@ -65,6 +65,7 @@ public class gestorClientes {
         } catch (IOException e) {
             System.out.println("Error al crear el archivo.");
         }
+*/
     }
     
     
