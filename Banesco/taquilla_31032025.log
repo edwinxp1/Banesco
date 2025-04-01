@@ -1,0 +1,26 @@
+Cliente atendido: hola prueba
+Cédula: 123
+Saldo final: $265.0
+Movimientos:
+[31/03/2025 22:37:12] Depósito: +300.0
+[31/03/2025 22:37:16] Retiro: -30.0
+[31/03/2025 22:37:31] Pago de Luz: -5.0
+-----------------------------------
+
+=== Resumen del Día ===
+Total de clientes atendidos: 1
+Fin del día.
+===================================
+Cliente atendido: hola hola
+Cédula: 123
+Saldo final: $0.0
+Movimientos:
+[31/03/2025 22:37:12] Depósito: +300.0
+[31/03/2025 22:37:16] Retiro: -30.0
+[31/03/2025 22:37:31] Pago de Luz: -5.0
+-----------------------------------
+
+=== Resumen del Día ===
+Total de clientes atendidos: 1
+Fin del día.
+===================================
