@@ -31,14 +31,14 @@ public class Cola {
     private Nodo finalCola;
     private int tamano;
 
-    //contructor
+    // contructor
     public Cola() {
         this.frente = null;
         this.finalCola = null;
         this.tamano = 0;
     }
 
-    //metodos correspondientes
+    // metodos correspondientes
     public boolean estaVacia() {
         return frente == null;
     }
@@ -74,7 +74,11 @@ public class Cola {
     }
 
     public Cliente verFrente() {
-        return estaVacia() ? null : frente.getCliente();
+        if (estaVacia()) {
+            return null;
+        } else {
+            return frente.getCliente();
+        }
     }
 
     public boolean contiene(int cedula) {
@@ -114,3 +118,5 @@ public class Cola {
     }
      
 }
+
+//

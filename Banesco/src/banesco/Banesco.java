@@ -65,7 +65,8 @@ public class Banesco {
     */
     private static void realizarTramite(Cola colaClientes, gestorClientes gestor) {
         Scanner scanner = new Scanner(System.in);
-        
+        //cronometro
+        Cronometro cronometro = new Cronometro();
         System.out.println("\n-- Usted ha seleccionado: Realizar trámite --");
         System.out.print("\nPor favor, ingrese su número de cédula: ");
         int cedula = scanner.nextInt();
@@ -113,15 +114,24 @@ public class Banesco {
 
 
             switch (opcion) {
-                case 1:
-                    System.out.print("\nIngrese el monto a retirar: ");
-                    double retiro = scanner.nextDouble();
+            case 1:
+                cronometro.iniciar(TIEMPO_RETIRO);
+                System.out.print("\nIngrese el monto a retirar: ");
+                double retiro = scanner.nextDouble();
+                if (!cronometro.tiempoExcedido()) {
                     cliente.retirar(retiro);
-                    movimientos++;
-                    break;
-                case 2:
-                    System.out.print("\nIngrese el monto a depositar: ");
-                    double deposito = scanner.nextDouble();
+                } else {
+                    System.out.println("\nTiempo excedido. Operación cancelada.");
+                }
+                cronometro.detener();
+                cronometro.mostrarTiempo("Retiro");
+                movimientos++;
+                break;
+            case 2:
+                cronometro.iniciar(TIEMPO_DEPOSITO);
+                System.out.print("\nIngrese el monto a depositar: ");
+                double deposito = scanner.nextDouble();
+                if (!cronometro.tiempoExcedido()) {
                     if (deposito > 0) {
                         cliente.depositar(deposito);
                         System.out.println("Depósito exitoso. Nuevo saldo: $" + cliente.getSaldo());
@@ -129,34 +139,59 @@ public class Banesco {
                     } else {
                         System.out.println("El monto debe ser positivo.");
                     }
-                    movimientos++;
-                    break;
-                case 3:
-                    System.out.println("\n--- Consulta de Movimientos ---");
-                    cliente.mostrarMovimientos();  
-                    movimientos++;
-                    break;
-
-                case 4:
-                    System.out.println("\n--- Ver libreta ---");
-                    cliente.mirarLibreta(); 
-                    movimientos++;
-                    break;
-                case 5:
+                } else {
+                    System.out.println("\nTiempo excedido. Operación cancelada.");
+                }
+                cronometro.detener();
+                cronometro.mostrarTiempo("Depósito");
+                movimientos++;
+                break;
+            case 3:
+                cronometro.iniciar(TIEMPO_MOVIMIENTOS);
+                System.out.println("\n--- Consulta de Movimientos ---");
+                if (!cronometro.tiempoExcedido()) {
+                    cliente.mostrarMovimientos();
+                } else {
+                    System.out.println("\nTiempo excedido. Operación cancelada.");
+                }
+                cronometro.detener();
+                cronometro.mostrarTiempo("Consulta de movimientos");
+                movimientos++;
+                break;
+            case 4:
+                cronometro.iniciar(TIEMPO_LIBRETA);
+                System.out.println("\n--- Ver libreta ---");
+                if (!cronometro.tiempoExcedido()) {
+                    cliente.mirarLibreta();
+                } else {
+                    System.out.println("\nTiempo excedido. Operación cancelada.");
+                }
+                cronometro.detener();
+                cronometro.mostrarTiempo("Ver libreta");
+                movimientos++;
+                break;
+            case 5:
+                cronometro.iniciar(TIEMPO_SERVICIOS);
+                if (!cronometro.tiempoExcedido()) {
                     cliente.pagoDeServicios();
-                    movimientos++;
-                    break;
-                case 6:
-                        System.out.println("\nSaliendo del trámite.");
-                        Entaquillar(cliente);
-                        colaClientes.desencolar();
-                        clientesAtendidos++;
-                        System.out.println("\nTrámite finalizado. Cliente removido de la cola.");
-                        sesionActiva = false;
-                        break;
-                default:
-                    System.out.println("\nOpción no válida. Intente nuevamente.");
-            }
+                } else {
+                    System.out.println("\nTiempo excedido. Operación cancelada.");
+                }
+                cronometro.detener();
+                cronometro.mostrarTiempo("Pago de servicios");
+                movimientos++;
+                break;
+            case 6:
+                System.out.println("\nSaliendo del trámite.");
+                Entaquillar(cliente);
+                colaClientes.desencolar();
+                clientesAtendidos++;
+                System.out.println("\nTrámite finalizado. Cliente removido de la cola.");
+                sesionActiva = false;
+                break;
+            default:
+                System.out.println("\nOpción no válida. Intente nuevamente.");
+        }
 
             if (movimientos >= 5) {
                 System.out.println("\nHa alcanzado el límite de 5 movimientos. Finalizando el trámite.");
@@ -169,7 +204,7 @@ public class Banesco {
         } while (sesionActiva);
 
         colaClientes.desencolar();
-        System.out.println("\nTrámite finalizado. Cliente removido de la cola.");
+        System.out.println("\nTrámite finalizado.");
         gestor.eliminarCliente(cliente.getCedula());
     }
     
@@ -184,7 +219,7 @@ public class Banesco {
         do {
             System.out.println("\n--- MODO TAQUILLA: ATENCIÓN AL CLIENTE ---");
             System.out.println("1. Ver la cola.");
-            System.out.println("2. Sacar a alguien de la cola.");
+            System.out.println("2. Sacar al primero de la cola.");
             System.out.println("3. Terminar el día.");
             System.out.print("Seleccione una opción: ");
 
@@ -217,7 +252,7 @@ public class Banesco {
         } while (opcion != 3);
 
         System.out.println("Fin del día. Cerrando sistema.");
-        System.out.println("(Operaciones de los clientes del dia de hoy guardadas en: Taquilla.log)"); //#por terminar
+        System.out.println("(Operaciones de los clientes del dia de hoy guardadas en: Taquilla.log)"); 
     }
         
         private static void Entaquillar(Cliente cliente) {

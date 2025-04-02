@@ -30,7 +30,7 @@ public class gestorClientes {
             }
             System.out.println("\nClientes cargados desde el archivo correctamente.");
         } catch (FileNotFoundException e) {
-            System.out.println("Archivo no encontrado. Creando uno nuevo...");
+            System.out.println(": [Archivo no encontrado. Se ha creado un nuevo Clientes.in]");
             crearArchivoClientes();
         } catch (IOException e) {
             System.out.println("Error al leer el archivo.");

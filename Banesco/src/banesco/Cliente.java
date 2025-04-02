@@ -71,7 +71,7 @@ public class Cliente {
     }
     
     //logica para: mostrar, leer y guardar los movimientos desde el archivo "movimientos.log"
-    //esto es necesario para e case 3 y 4
+    // esto es necesario para e case 3 y 4
     public void mostrarMovimientos() {
         System.out.println("\nMovimientos de " + getNombreCompleto() + ":");
         movimientos.mostrar();
